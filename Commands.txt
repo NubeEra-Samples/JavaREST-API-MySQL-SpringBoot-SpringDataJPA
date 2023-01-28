@@ -1,0 +1,67 @@
+mvn clean spring-boot:run
+
+"employee"
+"Content-Type":"application/json"
+
+
+{
+	"id":"3",
+	"firstName":"ccc",
+	"lastName":"ddd",
+	"email":"cd@m.com"
+}
+
+
+docker volume create ^
+	--name mysql_volume ^
+	--opt type=none ^
+	--opt device=/D/DockerVolumes/MySQLVol ^
+	--opt o=bind
+
+
+docker run ^
+	--name mysqlcontainer ^
+	--env=MYSQL_ROOT_PASSWORD=123 ^
+	--env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ^
+	--env=GOSU_VERSION=1.14 --env=MYSQL_MAJOR=8.0 --env=MYSQL_VERSION=8.0.31-1.el8 ^
+	--env=MYSQL_SHELL_VERSION=8.0.31-1.el8 -v mysql_volume:/var/lib/mysql -p 3306:3306 ^
+	--runtime=runc -d mysql:latest
+
+
+
+create database employee_db;
+
+automatically table creation no need to create
+
+mvn clean 
+mvn spring-boot:run
+	OR
+mvn clean spring-boot:run
+
+
+curl -X GET \
+  http://localhost:8080/employee/all 
+
+curl -X POST \
+  http://localhost:8080/employee/add \
+  -H 'content-type: application/json' \
+  -d '{
+	"id":"2",
+	"firstName": "Mujahed",
+	"lastName": "Syed",
+	"email":"abc@gmail.com"
+}'
+
+
+curl -X POST \
+  http://localhost:8080/employee/add \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 0e42d165-5f84-42d0-33d9-964d95d294fc' \
+  -H 'token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.vrBwp9oj95tK4QY019uH-h3iQ1f6YC6zzbq54ugfFZU' \
+  -d '{
+	"id":"3",
+	"firstName": "Mujahed",
+	"lastName": "Syed",
+	"email":"abc@gmail.com"
+}'
